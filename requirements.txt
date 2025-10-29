@@ -1,0 +1,41 @@
+# ======================================
+# REQUIREMENTS.TXT - ANONYME SMARTPHONE BOT
+# ======================================
+# Fichier des dépendances Python pour l'hébergement sur Render
+# Généré le 29 octobre 2025
+
+# ==== TELEGRAM BOT FRAMEWORK ====
+# Framework principal pour les bots Telegram
+python-telegram-bot==20.7
+
+# ==== BASE DE DONNÉES ====
+# Driver MongoDB pour Python
+pymongo==4.6.0
+
+# ==== GESTION IMAGES ====
+# Service de stockage et optimisation d'images
+cloudinary==1.36.0
+
+# ==== VARIABLES D'ENVIRONNEMENT ====
+# Gestion des fichiers .env
+python-dotenv==1.0.0
+
+# ==== REQUÊTES HTTP ====
+# Client HTTP pour les appels API (Cloudinary REST)
+requests==2.31.0
+
+# ==== MONITORING SYSTÈME ====
+# Informations système (RAM, CPU, etc.) - Optionnel
+psutil==5.9.6
+
+# ==== UTILITAIRES PYTHON STANDARD ====
+# Ces modules sont inclus avec Python mais listés pour référence :
+# - os (gestion système de fichiers)
+# - sys (informations système Python)
+# - json (manipulation JSON)
+# - base64 (encodage/décodage)
+# - datetime (gestion dates/heures)
+# - asyncio (programmation asynchrone)
+# - re (expressions régulières)
+# - typing (annotations de types)
+# - traceback (gestion d'erreurs)
