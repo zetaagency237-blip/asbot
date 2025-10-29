@@ -1,5 +1,4 @@
 import os
-import asyncio
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackQueryHandler
 from telegram import Update, BotCommand
 from telegram.ext import ContextTypes
@@ -29,24 +28,7 @@ from handlers.mobile_admin_handlers import (
 
 from handlers.callback_handlers import button_callback
 
-async def setup_bot_commands(app):
-    """Configure les commandes du bot dans l'interface Telegram"""
-    commands = [
-        BotCommand("start", "🏠 Commencer"),
-        BotCommand("produits", "📱 Voir le catalogue"),
-        BotCommand("services", "🛠️ Nos services"),
-        BotCommand("communaute", "👥 Rejoindre la communauté"),
-        BotCommand("apropos", "ℹ️ À propos de nous"),
-        BotCommand("mobileadmin", "📱 Admin mobile (admin uniquement)")
-    ]
-    
-    try:
-        await app.bot.set_my_commands(commands)
-        print("✅ Commandes du bot configurées")
-    except Exception as e:
-        print(f"⚠️ Erreur configuration commandes: {e}")
-
-async def error(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handler d'erreur global"""
     print(f'❌ Erreur: {context.error}')
 
@@ -57,8 +39,13 @@ def main():
     # Initialiser la base de données
     init_database()
     
-    # Créer l'application
-    app = Application.builder().token(BOT_TOKEN).build()
+    # Créer l'application avec une approche différente
+    try:
+        app = Application.builder().token(BOT_TOKEN).build()
+    except Exception as e:
+        print(f"Erreur création app: {e}")
+        # Version alternative plus simple
+        app = Application.builder().token(BOT_TOKEN).updater(None).build()
     
     # Ajouter les handlers de commandes de base
     app.add_handler(CommandHandler("start", start_command))
@@ -91,19 +78,20 @@ def main():
     app.add_handler(MessageHandler(filters.PHOTO, handle_mobile_image_upload))
 
     # Handler d'erreurs
-    app.add_error_handler(error)
-
-    # Configuration du menu des commandes (appelé après 1 seconde)
-    app.job_queue.run_once(lambda context: setup_bot_commands(app), when=1)
+    app.add_error_handler(error_handler)
 
     print("🎉 BOT ANONYME SMARTPHONE DÉMARRÉ AVEC SUCCÈS!")
     print("📱 Administration mobile disponible avec /mobileadmin")
     print("🖼️ Gestion d'images des menus intégrée")
     
-    # Démarrer en mode polling (compatible avec tous les environnements)
+    # Démarrer en mode polling simple
     print("🔄 Mode POLLING...")
     try:
-        app.run_polling(allowed_updates=Update.ALL_TYPES)
+        app.run_polling(
+            allowed_updates=Update.ALL_TYPES,
+            drop_pending_updates=True,
+            close_loop=False
+        )
     except KeyboardInterrupt:
         print("\n🛑 Bot arrêté par l'utilisateur")
     except Exception as e:

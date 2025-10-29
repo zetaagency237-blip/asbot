@@ -5,8 +5,8 @@
 # Généré le 29 octobre 2025
 
 # ==== TELEGRAM BOT FRAMEWORK ====
-# Framework principal pour les bots Telegram
-python-telegram-bot==20.7
+# Framework principal pour les bots Telegram - Compatible Python 3.13
+python-telegram-bot==21.6
 
 # ==== BASE DE DONNÉES ====
 # Driver MongoDB pour Python
