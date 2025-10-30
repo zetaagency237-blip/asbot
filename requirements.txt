@@ -24,6 +24,10 @@ python-dotenv==1.0.0
 # Client HTTP pour les appels API (Cloudinary REST)
 requests==2.31.0
 
+# ==== SERVEUR WEB FLASK ====
+# Framework web léger pour keep-alive
+Flask==2.3.3
+
 # ==== MONITORING SYSTÈME ====
 # Informations système (RAM, CPU, etc.) - Optionnel
 psutil==5.9.6
